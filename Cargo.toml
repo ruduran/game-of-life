@@ -1,0 +1,10 @@
+[package]
+name = "game_of_life"
+version = "0.1.0"
+authors = ["Rubén Durán Balda <ruduran@users.noreply.github.com>"]
+
+[dependencies]
+ncurses = "5.91.0"
+
+[profile.release]
+lto = true
