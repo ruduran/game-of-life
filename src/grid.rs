@@ -37,33 +37,17 @@ impl Grid {
         refresh();
     }
 
-    // TODO: Improve
     fn neighbours(&self, h: usize, w: usize) -> usize {
         let mut count = 0;
 
-        if h > 0 && w > 0 && self.matrix[h-1][w-1] {
-            count += 1;
-        }
-        if h > 0 && self.matrix[h-1][w] {
-            count += 1;
-        }
-        if h > 0 && w < self.matrix.width-1 && self.matrix[h-1][w+1] {
-            count += 1;
-        }
-        if w < self.matrix.width-1 && self.matrix[h][w+1] {
-            count += 1;
-        }
-        if h < self.matrix.height-1 && w < self.matrix.width-1 && self.matrix[h+1][w+1] {
-            count += 1;
-        }
-        if h < self.matrix.height-1 && self.matrix[h+1][w] {
-            count += 1;
-        }
-        if h < self.matrix.height-1 && w > 0 && self.matrix[h+1][w-1] {
-            count += 1;
-        }
-        if w > 0 && self.matrix[h][w-1] {
-            count += 1;
+        for c in 0..3 {
+            for r in 0..3 {
+                if !(c == 1 && r == 1) &&
+                   h + c > 0 && w + r > 0 &&
+                   self.matrix[h + c - 1][w + r - 1] {
+                    count += 1;
+                }
+            }
         }
 
         count
