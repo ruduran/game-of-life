@@ -1,0 +1,31 @@
+{
+  "height": 10,
+  "width": 10,
+  "elements": [
+    {
+      "height": 0,
+      "width": 1,
+      "alive": true
+    },
+    {
+      "height": 1,
+      "width": 2,
+      "alive": true
+    },
+    {
+      "height": 2,
+      "width": 0,
+      "alive": true
+    },
+    {
+      "height": 2,
+      "width": 1,
+      "alive": true
+    },
+    {
+      "height": 2,
+      "width": 2,
+      "alive": true
+    }
+  ]
+}

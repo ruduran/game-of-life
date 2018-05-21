@@ -4,7 +4,11 @@ version = "0.1.0"
 authors = ["Rubén Durán Balda <ruduran@users.noreply.github.com>"]
 
 [dependencies]
+argparse = "0.2.1"
 ncurses = "5.91.0"
+serde = "1.0"
+serde_derive = "1.0"
+serde_json = "1.0"
 
 [profile.release]
 lto = true

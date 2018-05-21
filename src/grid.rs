@@ -1,4 +1,7 @@
+use serde_json;
 use ncurses::*;
+
+use std::fs::File;
 
 use matrix::Matrix;
 
@@ -7,16 +10,9 @@ pub struct Grid {
 }
 
 impl Grid {
-    // TODO: Simplify once an initial grid can be loaded/given
     pub fn new(width: usize, height: usize) -> Grid {
-        let mut matrix = Matrix::<bool>::new(width, height, false);
-        matrix[0][1] = true;
-        matrix[1][2] = true;
-        matrix[2][0] = true;
-        matrix[2][1] = true;
-        matrix[2][2] = true;
         Grid {
-            matrix
+            matrix: Matrix::<bool>::new(width, height, false)
         }
     }
 
@@ -67,4 +63,55 @@ impl Grid {
         }
         self.matrix = next_matrix;
     }
+
+    pub fn load (&mut self, path: &String) {
+        let file = File::open(path).unwrap();
+        let g: SerializableGrid = serde_json::from_reader(file).unwrap();
+
+        let mut new_matrix = Matrix::<bool>::new(g.width, g.height, false);
+        for cell in g.elements.iter() {
+            new_matrix[cell.height][cell.width] = cell.alive;
+        }
+        self.matrix = new_matrix;
+    }
+
+    pub fn save(&self, path: &String) {
+        let mut g = SerializableGrid {
+            height: self.matrix.height,
+            width: self.matrix.width,
+            elements: Vec::<Cell>::new()
+        };
+
+        for h in 0..self.matrix.height {
+            for w in 0..self.matrix.width {
+                if self.matrix[h][w] {
+                    let c = Cell {
+                        height: h,
+                        width: w,
+                        alive: self.matrix[h][w]
+                    };
+                    g.elements.push(c);
+                }
+            }
+        }
+
+
+        let file = File::create(path).unwrap();
+        serde_json::to_writer_pretty(file, &g);
+    }
+}
+
+
+#[derive(Serialize, Deserialize)]
+struct Cell {
+    height: usize,
+    width: usize,
+    alive: bool
+}
+
+#[derive(Serialize, Deserialize)]
+struct SerializableGrid {
+    height: usize,
+    width: usize,
+    elements: Vec<Cell>,
 }
