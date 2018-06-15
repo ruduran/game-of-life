@@ -30,8 +30,8 @@ fn parse_args() -> Options {
         ap.set_description("Game Of Life.");
         ap.refer(&mut options.filename)
             .required()
-            .add_option(&["-f", "--filename"], Store,
-                        "TODO");
+            .add_argument("filename", Store,
+                          "File to use as input (and possible output)");
         ap.parse_args_or_exit();
     }
     options
