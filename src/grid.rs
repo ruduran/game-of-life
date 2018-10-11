@@ -23,7 +23,7 @@ impl Grid {
         for h in 0..self.matrix.height {
             for w in 0..self.matrix.width {
                 if self.matrix[h][w] {
-                    printw("X");
+                    printw("█");
                 } else {
                     printw(" ");
                 }
